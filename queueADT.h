@@ -1,5 +1,4 @@
 //Header file: stackADT.h
- 
 #ifndef H_queueADT 
 #define H_queueADT
  
