@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdlib>
  
-#include "Simulation.h"
+#include "simulation.h"
 #include "queueAsArray.h"
 
 using namespace std;
@@ -40,25 +40,22 @@ void customerType::incrementWaitingTime()
 
 void customerType::setWaitingTime(int time)
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
+    waitingTime = time;
 }
 
 int customerType::getArrivalTime() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return arrivalTime;
 }
 
 int customerType::getTransactionTime() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return transactionTime;
 }
 
 int customerType::getCustomerNumber() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return customerNumber;
 }
 //**************** serverType **********
 
@@ -104,37 +101,32 @@ void serverType::decreaseTransactionTime()
 
 int serverType::getRemainingTransactionTime() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return transactionTime;
 }
 
 void serverType::setCurrentCustomer(customerType cCustomer)
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
+    currentCustomer = cCustomer;
 }
 
 int serverType::getCurrentCustomerNumber() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return currentCustomer.getCustomerNumber();
 }
 
 int serverType::getCurrentCustomerArrivalTime() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return currentCustomer.getArrivalTime();
 }
 
 int serverType::getCurrentCustomerWaitingTime() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return currentCustomer.getWaitingTime();
 }
 
 int serverType::getCurrentCustomerTransactionTime() const
 {
-    cout << "See Programming Exercise 17 at the end of this chapter." << endl;
-    return 0;
+    return currentCustomer.getTransactionTime();
 }
 
 
