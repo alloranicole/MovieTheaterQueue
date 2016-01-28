@@ -183,6 +183,7 @@ void serverListType::setServerBusy(int serverID,
     servers[serverID].setBusy();
     servers[serverID].setTransactionTime(tTime);
     servers[serverID].setCurrentCustomer(cCustomer);
+    //Output whenever a customer goes up to be served
     cout << "Server " << serverID+1 << " now serving Customer " << cCustomer.getCustomerNumber()
          << " at time " << cCustomer.getArrivalTime() + cCustomer.getWaitingTime()
          << endl; 
@@ -223,6 +224,7 @@ void serverListType::updateServers()
                            + servers[i].
                               getCurrentCustomerTransactionTime()
                         << endl;
+                //completed transactions tallied 
                 completed++;
                 servers[i].setFree();
             }
