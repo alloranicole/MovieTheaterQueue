@@ -75,6 +75,7 @@ void CustomerArrival(waitingCustomerQueueType& wCustomers, int tBetweenCArrival,
 
 //Updates tWait so that it also reflects the wait time of customers
 //still waiting in the queue.
+//WARNING: Queue will be emptied. Make a copy before calling if need be.
 void updateWaitTime(waitingCustomerQueueType& wCustomers, int& tWait)
 {
      while(!wCustomers.isEmptyQueue())//add front until empty
