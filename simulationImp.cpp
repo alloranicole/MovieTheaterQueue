@@ -133,12 +133,18 @@ int serverType::getCurrentCustomerTransactionTime() const
 serverListType::serverListType(int num)
 {
     numOfServers = num;
+    completed = 0;
     servers = new serverType[num];
 }
 
 serverListType::~serverListType()
 {
     delete [] servers;
+}
+
+int serverListType::getCompleted()
+{
+    return completed;
 }
 
 int serverListType::getFreeServerID() const
@@ -177,6 +183,9 @@ void serverListType::setServerBusy(int serverID,
     servers[serverID].setBusy();
     servers[serverID].setTransactionTime(tTime);
     servers[serverID].setCurrentCustomer(cCustomer);
+    cout << "Server " << serverID+1 << " now serving Customer " << cCustomer.getCustomerNumber()
+         << " at time " << cCustomer.getArrivalTime() + cCustomer.getWaitingTime()
+         << endl; 
 }
 
 void serverListType::setServerBusy(int serverID, 
@@ -191,7 +200,8 @@ void serverListType::setServerBusy(int serverID,
     servers[serverID].setCurrentCustomer(cCustomer);
 }
 
-void serverListType::updateServers(ostream& outFile)
+//void serverListType::updateServers(ostream& outFile)
+void serverListType::updateServers()
 {
     int i;
 
@@ -202,10 +212,10 @@ void serverListType::updateServers(ostream& outFile)
 
             if (servers[i].getRemainingTransactionTime() == 0)
             {
-                outFile << "From server number  " << (i + 1) 
-                        << " customer number "
+                cout << "From Server " << (i + 1) 
+                        << " Customer "
                         << servers[i].getCurrentCustomerNumber()
-                        << "\n     departed at time unit "
+                        << "\n     departed at time "
                         << servers[i].
                               getCurrentCustomerArrivalTime()
                            + servers[i].
@@ -213,6 +223,7 @@ void serverListType::updateServers(ostream& outFile)
                            + servers[i].
                               getCurrentCustomerTransactionTime()
                         << endl;
+                completed++;
                 servers[i].setFree();
             }
         }

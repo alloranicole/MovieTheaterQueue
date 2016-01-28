@@ -19,13 +19,7 @@ void runSimulation();
  
 int main()
 {
-   // runSimulation();
-   waitingCustomerQueueType w; 
-   srand(time(0));
-   for(int clock = 1; clock <= 50; clock++){
-   CustomerArrival(w,5,clock,3); 
-}
-
+    runSimulation();
     return 0;
 }
 
@@ -57,9 +51,8 @@ void CustomerArrival(waitingCustomerQueueType& wCustomers, int tBetweenCArrival,
     customerType C;
     static int CN = 1;
     rNum = ((double) rand() / (RAND_MAX)); 
-    cout << rNum << endl; 
     if(rNum > (exp(-1*lambda))){
-      cout << "Customer Arrived" << endl; 
+      cout << "Customer " << CN << " arrived at time " << clock << endl; 
       C.setCustomerInfo(CN,clock,0,transTime);
       wCustomers.addQueue(C);
       CN++;
@@ -74,12 +67,14 @@ void runSimulation()
          tBetweenArrival;
      customerType D;
      waitingCustomerQueueType wCustomers;
-    // fopen...
-    // ostream outfile;
+   // ofstream outfile;
+    // outfile.open("TheaterSimulation")
      setSimulationParameters(sTime,numServers,transTime,tBetweenArrival); 
      serverListType Servers(numServers);
+     srand(time(0));
      for(int clock = 1; clock <= sTime; clock++){
-       // Servers.updateServers(outfile);
+        // Servers.updateServers(outfile);
+         Servers.updateServers();
          if(!wCustomers.isEmptyQueue())
              wCustomers.updateWaitingQueue();
          CustomerArrival(wCustomers,tBetweenArrival,clock,transTime);
@@ -89,12 +84,15 @@ void runSimulation()
                D = wCustomers.front();
                tWait += D.getWaitingTime(); 
                wCustomers.deleteQueue();
-               Servers.setServerBusy(sID,D.getCustomerNumber(),
+               Servers.setServerBusy(sID,D,
                                      D.getTransactionTime());
             }
          }
-     }               
-
+     }
+   //  outfile.close();                
+     cout << "Total Wait Time: " << tWait << endl;
+     cout << "Completed Transactions: " << Servers.getCompleted() << endl; 
+     cout << "Customers remaining in queue: " << wCustomers.getCount() << endl;
 }
 
 

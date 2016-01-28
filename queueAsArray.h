@@ -30,6 +30,9 @@ public:
       //Function to initialize the queue to an empty state.
       //Postcondition: The queue is empty.
 
+    int getCount();
+      //Function to return the number of elements in queue
+    
     Type front() const;
       //Function to return the first element of the queue.
       //Precondition: The queue exists and is not empty.
@@ -95,6 +98,12 @@ void queueType<Type>::initializeQueue()
     queueRear = maxQueueSize - 1;
     count = 0;
 } //end initializeQueue
+
+template <class Type>
+int queueType<Type>::getCount()
+{
+    return count; 
+}//end getCount
 
 template <class Type>
 Type queueType<Type>::front() const

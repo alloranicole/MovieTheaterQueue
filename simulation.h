@@ -156,6 +156,9 @@ public:
     ~serverListType();
       //Destructor
       //Postcondition: The list of servers is destroyed.
+     
+    int getCompleted();
+      //Function to return the completed number of transactions
 
     int getFreeServerID() const;
       //Function to search the list of servers. 
@@ -181,7 +184,8 @@ public:
       //               to "busy", to serve the customer 
       //               specified by cCustomer. 
 
-    void updateServers(ostream& outFile);
+   // void updateServers(ostream& outFile);
+    void updateServers(void);
       //Function to update the status of a server.
       //Postcondition: The transaction time of each busy 
       //               server is decremented by one unit. If 
@@ -198,6 +202,7 @@ public:
 private:
     int numOfServers;
     serverType *servers;
+    int completed; 
 };
 
 
