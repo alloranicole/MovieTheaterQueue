@@ -77,15 +77,10 @@ void CustomerArrival(waitingCustomerQueueType& wCustomers, int tBetweenCArrival,
 //still waiting in the queue.
 void updateWaitTime(waitingCustomerQueueType& wCustomers, int& tWait)
 {
-
-     //Isn't this redundant? The while loop will check first before going in the loop
-     if(!wCustomers.isEmptyQueue())//make sure queue isn't empty
+     while(!wCustomers.isEmptyQueue())//add front until empty
      {
-          while(!wCustomers.isEmptyQueue())//add front until empty
-          {
-                tWait = tWait + wCustomers.front().getWaitingTime();
-                wCustomers.deleteQueue();
-          }
+          tWait = tWait + wCustomers.front().getWaitingTime();
+          wCustomers.deleteQueue();
      }
 }
 
@@ -104,25 +99,26 @@ void runSimulation(int seed)
      serverListType Servers(numServers);
      //Checks if the user input a seed to use or if just using the clock
      if(seed == -1)
-        srand(time(0));
+          srand(time(0));
      else
-        srand((unsigned)seed);  
+          srand((unsigned)seed);  
      //Main clock loop for the simulation
      for(int clock = 1; clock <= sTime; clock++){
-         //Update the server list to decrement the transaction time of 
-         //busy servers
-         //Function changed to take out ostream so output prints to screen
-         Servers.updateServers();
-         //If customers in line, increment waiting time 
-         if(!wCustomers.isEmptyQueue())
-             wCustomers.updateWaitingQueue();
-         //If customer arrives add them to the end of the line
-         CustomerArrival(wCustomers,tBetweenArrival,clock,transTime);
-         //If customers in the line and a server is free
-         //pair the customer next in line with a free server
-            //Check for free server
-            sID = Servers.getFreeServerID();
-            while(sID != -1 && !wCustomers.isEmptyQueue()){
+          //Update the server list to decrement the transaction time of 
+          //busy servers
+          //Function changed to take out ostream so output prints to screen
+          Servers.updateServers();
+          //If customers in line, increment waiting time 
+          if(!wCustomers.isEmptyQueue())
+               wCustomers.updateWaitingQueue();
+          //If customer arrives add them to the end of the line
+          CustomerArrival(wCustomers,tBetweenArrival,clock,transTime);
+          //If customers in the line and a server is free
+          //pair the customer next in line with a free server
+          //Check for free server
+          sID = Servers.getFreeServerID();
+          while(sID != -1 && !wCustomers.isEmptyQueue())
+          {
                //Get customer from front of line
                D = wCustomers.front();
                //Add customer waiting time to total
@@ -131,7 +127,7 @@ void runSimulation(int seed)
                //Move customer to server
                Servers.setServerBusy(sID, D, D.getTransactionTime());
                sID = Servers.getFreeServerID();
-            }
+          }
      }
 
      //update any final output variables that need it
@@ -148,8 +144,8 @@ void runSimulation(int seed)
      cout << "Simulation Time:       " << sTime << endl;
      cout << "Number of Servers:     " << numServers << endl;
      cout << "Transaction Time:      " << transTime << endl;
-     //Output result information.
      cout << "Time Between Arrivals: " << tBetweenArrival << endl;
+     //Output result information.
      cout << "---The results are:-----------------" << endl;
      cout << "Total Wait Time:              " << tWait << endl;
      cout << "Completed Transactions:       " << Servers.getCompleted() << endl;
